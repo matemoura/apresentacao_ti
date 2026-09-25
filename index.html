@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missão TI 2027 — escolha a versão</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Pixelify+Sans:wght@600;700&family=Silkscreen&display=swap">
+
+<style>
+:root {
+    --safira: #56A4BB;
+    --filtrado: #5F88A1;
+    --tecno: #9CE5EE;
+    --cirurgico: #818286;
+    --seguro: #D9E4E8;
+    --branco: #FFFFFF;
+    --ink: #2A3B44;
+    --deep: #33485a;
+    --fg-soft: #51646E;
+    --font-display: 'Pixelify Sans', 'Montserrat', sans-serif;
+    --font-pixel: 'Silkscreen', monospace;
+    --font-body: 'Montserrat', sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(150deg, var(--filtrado) 0%, var(--deep) 100%);
+    font-family: var(--font-body);
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(1.6rem, 4vw, 3.5rem) 1.2rem clamp(3rem, 6vw, 4rem);
+}
+.logo { height: clamp(48px, 6vw, 64px); width: auto; margin-bottom: clamp(1.2rem, 2.5vw, 1.8rem); image-rendering: -webkit-optimize-contrast; }
+.eyebrow {
+    font-family: var(--font-pixel);
+    color: var(--tecno);
+    letter-spacing: 0.1em;
+    font-size: clamp(0.65rem, 1.1vw, 0.8rem);
+    margin-bottom: 0.8rem;
+}
+h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    line-height: 1.15;
+    margin: 0 0 0.6rem;
+}
+.sub {
+    color: rgba(255,255,255,0.85);
+    text-align: center;
+    max-width: 640px;
+    font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+    margin-bottom: clamp(2.2rem, 4vw, 3.2rem);
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2.4vw, 1.8rem);
+    width: 100%;
+    max-width: 1180px;
+}
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; max-width: 460px; } }
+.card {
+    background: var(--branco);
+    border: 5px solid var(--ink);
+    box-shadow: 10px 10px 0 0 rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--ink);
+    overflow: hidden;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+.card:hover { transform: translate(-3px, -3px); box-shadow: 13px 13px 0 0 rgba(0,0,0,0.3); }
+.card .tag {
+    font-family: var(--font-pixel);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    color: #fff;
+    padding: 0.55rem 1rem;
+    border-bottom: 5px solid var(--ink);
+}
+.card.v1 .tag { background: var(--cirurgico); }
+.card.v2 .tag { background: var(--filtrado); }
+.card.v3 .tag { background: var(--ink); }
+.card .body { padding: 1.3rem 1.4rem 1.5rem; display: flex; flex-direction: column; gap: 0.7rem; flex: 1; }
+.card .name { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; line-height: 1.2; }
+.card .desc { font-size: 0.92rem; color: var(--fg-soft); line-height: 1.5; flex: 1; }
+.card .feats { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.82rem; color: var(--fg-soft); }
+.card .feats li::before { content: "▪ "; color: var(--safira); }
+.card .go {
+    margin-top: 0.3rem;
+    font-family: var(--font-pixel);
+    font-size: 0.72rem;
+    color: var(--safira);
+    letter-spacing: 0.05em;
+}
+.card:hover .go { color: var(--deep); }
+footer {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    font-family: var(--font-pixel);
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+}
+</style>
+</head>
+<body>
+
+<img class="logo" src="assets/image4.png" alt="MSB Medical System do Brasil">
+<span class="eyebrow">TI · Diagnóstico de Área · 2027</span>
+<h1>Missão TI 2027</h1>
+<p class="sub">Três direções de design para a mesma apresentação. Abra cada uma e escolha a que vai pro Diretor Industrial.</p>
+
+<div class="grid">
+    <a class="card v1" href="index-v1-classico.html">
+        <div class="tag">VERSÃO 1</div>
+        <div class="body">
+            <div class="name">Clássica</div>
+            <div class="desc">O deck original: 13 telas gamificadas em pixel art, com plano de ação, roadmap trimestral e indicadores.</div>
+            <ul class="feats">
+                <li>Chefões, barra de vida do D365</li>
+                <li>Comparativo estático vitrine x bastidores</li>
+                <li>Mais enxuta, mais rápida de apresentar</li>
+            </ul>
+            <div class="go">ABRIR →</div>
+        </div>
+    </a>
+    <a class="card v2" href="index-v2-rpg.html">
+        <div class="tag">VERSÃO 2</div>
+        <div class="body">
+            <div class="name">RPG Interativo</div>
+            <div class="desc">A versão com mais personagem: robô pixel art, ficha de personagem, mapa da missão clicável e a fábrica com o robô circulando.</div>
+            <ul class="feats">
+                <li>Cortina arrastável (vitrine x bastidores)</li>
+                <li>Mapa da missão navegável</li>
+                <li>15 telas, a mais lúdica das três</li>
+            </ul>
+            <div class="go">ABRIR →</div>
+        </div>
+    </a>
+    <a class="card v3" href="index-v3-industrial.html">
+        <div class="tag">VERSÃO 3</div>
+        <div class="body">
+            <div class="name">Industrial Pixel</div>
+            <div class="desc">Visual mais polido: bordas grossas, sombra sólida, sprites pixel art de alta fidelidade e tipografia dedicada (Pixelify Sans + Silkscreen).</div>
+            <ul class="feats">
+                <li>Cada tela mostra a pergunta original</li>
+                <li>Cortina arrastável + mapa da missão</li>
+                <li>14 telas, o acabamento mais profissional</li>
+            </ul>
+            <div class="go">ABRIR →</div>
+        </div>
+    </a>
+</div>
+
+<footer>MSB Medical System do Brasil · TI · Missão 2027</footer>
+
+</body>
+</html>

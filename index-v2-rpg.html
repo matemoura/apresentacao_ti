@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missão TI 2027 — MSB Medical System do Brasil</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Press+Start+2P&display=swap">
+
+<style>
+/* ============================================================
+   MSB — Manual de Marca e Identidade Visual (Studio Fika, 2024)
+   Paleta institucional:
+     Azul Filtrado  #56A4BB  (cor primária — P 549 C)
+     Azul Safira    #5F88A1  (P 5415 C)
+     Azul Tecno     #9CE5EE  (P 118-3 C)
+     Cinza Cirúrgico #818286 (P 430 C)
+     Cinza Seguro   #D9E4E8  (P 649 C)
+     Branco         #FFFFFF
+   Tipografia: Gotham (Bold títulos / Medium subtítulos / Book corpo)
+   — Montserrat como substituta web quando Gotham não está instalada.
+   Tema desta peça: "pixel art / gamificado" — Press Start 2P para
+   headlines, HUD e números; Montserrat para corpo (legibilidade).
+   ============================================================ */
+:root {
+    --azul-filtrado: #56A4BB;
+    --azul-safira:   #5F88A1;
+    --azul-tecno:    #9CE5EE;
+    --cinza-cirurgico: #818286;
+    --cinza-seguro:  #D9E4E8;
+    --branco:        #FFFFFF;
+
+    --bg:        var(--branco);
+    --bg-soft:   #EFF5F7;
+    --bg-card:   var(--branco);
+    --border:    rgba(95, 136, 161, 0.18);
+    --border-strong: rgba(95, 136, 161, 0.35);
+
+    --fg:        #2A3B44;
+    --fg-soft:   #51646E;
+    --fg-muted:  var(--cinza-cirurgico);
+
+    --accent:    var(--azul-filtrado);
+    --accent-deep: var(--azul-safira);
+    --accent-light: var(--azul-tecno);
+
+    --font-display: 'Gotham', 'Montserrat', sans-serif;
+    --font-body:    'Gotham', 'Montserrat', sans-serif;
+    --font-pixel:   'Press Start 2P', monospace;
+
+    --title-size:    clamp(1.5rem, 4.3vw, 3rem);
+    --h2-size:       clamp(1.15rem, 2.5vw, 1.9rem);
+    --h3-size:       clamp(0.95rem, 1.5vw, 1.1rem);
+    --body-size:     clamp(0.95rem, 1.2vw, 1.15rem);
+    --small-size:    clamp(0.82rem, 1.02vw, 0.98rem);
+    --label-size:    clamp(0.68rem, 0.82vw, 0.76rem);
+
+    --slide-padding: clamp(1.4rem, 4vw, 4rem);
+    --card-radius:   4px;
+    --px: 8px; /* unidade de "pixel" para bordas serrilhadas */
+
+    --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; overflow: hidden; }
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: var(--body-size);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: 0.005em;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+}
+
+/* leve varredura CRT — decorativo, não compromete leitura */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(42,59,68,0.035) 0px,
+        rgba(42,59,68,0.035) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    mix-blend-mode: multiply;
+}
+
+#fullpage {
+    width: 100vw;
+    will-change: transform;
+    transition: transform 0.95s cubic-bezier(0.65, 0, 0.05, 1);
+}
+
+.slide {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: var(--slide-padding);
+    background: var(--bg);
+    transition: opacity 0.7s var(--ease-out), transform 0.95s var(--ease-out), filter 0.7s var(--ease-out);
+}
+.slide:not(.is-active) {
+    opacity: 0.35;
+    transform: scale(0.94);
+    filter: blur(4px);
+}
+.slide.is-active { opacity: 1; transform: scale(1); filter: blur(0); }
+
+.slide.is-active .reveal { animation: slideReveal 0.85s var(--ease-out) forwards; }
+.slide.is-active .reveal:nth-child(1) { animation-delay: 0.15s; }
+.slide.is-active .reveal:nth-child(2) { animation-delay: 0.30s; }
+.slide.is-active .reveal:nth-child(3) { animation-delay: 0.45s; }
+.slide.is-active .reveal:nth-child(4) { animation-delay: 0.60s; }
+.slide.is-active .reveal:nth-child(5) { animation-delay: 0.75s; }
+.slide.is-active .reveal:nth-child(6) { animation-delay: 0.90s; }
+
+@keyframes slideReveal {
+    0%   { opacity: 0; transform: translateY(28px) scale(0.97); filter: blur(8px); }
+    60%  { opacity: 1; filter: blur(0); }
+    100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+.reveal { opacity: 0; transform: translateY(20px); }
+
+.slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 55% 45% at 12% 8%, rgba(156, 229, 238, 0.18), transparent 62%),
+        radial-gradient(ellipse 50% 55% at 92% 94%, rgba(217, 228, 232, 0.55), transparent 60%);
+    z-index: 0;
+}
+.slide > * { position: relative; z-index: 1; }
+
+.wave-motif {
+    position: absolute;
+    left: 0; right: 0; bottom: -2px;
+    width: 100%;
+    height: clamp(60px, 10vh, 110px);
+    z-index: 0;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.slide-num {
+    position: absolute;
+    bottom: clamp(0.7rem, 1.5vw, 1.3rem);
+    right: clamp(1rem, 2vw, 2rem);
+    font-family: var(--font-pixel);
+    font-size: clamp(0.65rem, 0.72vw, 0.74rem);
+    color: var(--fg-muted);
+    letter-spacing: 0.05em;
+    z-index: 2;
+}
+
+.brand {
+    position: absolute;
+    top: clamp(0.9rem, 1.8vw, 1.5rem);
+    left: clamp(1rem, 2vw, 2rem);
+    display: flex;
+    align-items: center;
+    z-index: 2;
+}
+.brand img { height: clamp(30px, 4.5vh, 46px); }
+
+/* === HUD (canto sup. direito): vida / status do "jogador TI" === */
+.hud {
+    position: absolute;
+    top: clamp(0.9rem, 1.8vw, 1.5rem);
+    right: clamp(1rem, 2vw, 2rem);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-pixel);
+    font-size: clamp(0.62rem, 0.7vw, 0.72rem);
+    color: var(--fg-muted);
+    letter-spacing: 0.04em;
+}
+.hud .hud-tag { color: var(--accent-deep); }
+
+/* === TIPOGRAFIA === */
+h1, h2, h3 { color: var(--fg); }
+h1, h2 {
+    font-family: var(--font-pixel);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0;
+}
+h1 { font-size: var(--title-size); }
+h2 { font-size: var(--h2-size); }
+h3 { font-family: var(--font-body); font-size: var(--h3-size); font-weight: 700; letter-spacing: 0.01em; }
+
+.accent { color: var(--accent-deep); }
+
+.eyebrow {
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    color: var(--accent-deep);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: clamp(0.9rem, 1.8vw, 1.5rem);
+}
+.eyebrow::before {
+    content: "";
+    width: 10px; height: 10px;
+    background: var(--accent);
+    box-shadow: 3px 0 0 var(--accent), 0 -3px 0 var(--accent), 0 3px 0 var(--accent);
+    flex-shrink: 0;
+}
+
+.lead {
+    color: var(--fg-soft);
+    font-size: clamp(0.9rem, 1.25vw, 1.1rem);
+    max-width: 900px;
+}
+
+/* === LAYOUT === */
+.content-slide { justify-content: center; padding-top: clamp(4rem, 8vh, 6rem); }
+.content-slide .container {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.7rem, 1.4vw, 1.2rem);
+}
+
+/* === SLIDE DE TÍTULO / START SCREEN === */
+.title-slide {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(150deg, var(--azul-filtrado) 0%, var(--azul-safira) 78%);
+    color: var(--branco);
+}
+.title-slide::before {
+    background:
+        radial-gradient(ellipse 60% 60% at 72% 20%, rgba(156, 229, 238, 0.25), transparent 65%),
+        radial-gradient(ellipse 55% 55% at 20% 85%, rgba(255, 255, 255, 0.10), transparent 60%);
+}
+.title-slide h1 { color: var(--branco); margin-bottom: clamp(0.9rem, 2vh, 1.4rem); }
+.title-slide .logo {
+    height: clamp(56px, 9vh, 96px);
+    margin-bottom: clamp(1.2rem, 2.6vh, 2rem);
+    image-rendering: pixelated;
+}
+.title-slide .eyebrow { color: rgba(255,255,255,0.92); }
+.title-slide .eyebrow::before { background: var(--azul-tecno); box-shadow: 3px 0 0 var(--azul-tecno), 0 -3px 0 var(--azul-tecno), 0 3px 0 var(--azul-tecno); }
+.title-slide .subtitle {
+    color: rgba(255,255,255,0.88);
+    font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+    font-weight: 500;
+    max-width: 780px;
+    margin: 0 auto;
+}
+.title-slide .meta {
+    display: flex;
+    justify-content: center;
+    color: rgba(255,255,255,0.8);
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    letter-spacing: 0.03em;
+    margin-top: clamp(1.2rem, 2.4vh, 1.8rem);
+}
+.title-slide .meta span { padding: 0 clamp(0.7rem, 1.2vw, 1.2rem); position: relative; }
+.title-slide .meta span:not(:last-child)::after {
+    content: "·";
+    position: absolute; right: -3px;
+    color: var(--azul-tecno);
+}
+.title-slide.is-active h1 { animation: titleEntrance 1.4s var(--ease-bounce) forwards; }
+@keyframes titleEntrance {
+    0%   { opacity: 0; transform: translateY(40px) scale(0.92); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* barra de "carregando" no start screen */
+.loadbar {
+    width: min(420px, 70vw);
+    height: 14px;
+    background: rgba(255,255,255,0.18);
+    border: 2px solid rgba(255,255,255,0.55);
+    margin: clamp(1.4rem, 3vh, 2rem) auto 0.6rem;
+    position: relative;
+    overflow: hidden;
+}
+.loadbar .fill {
+    position: absolute; inset: 2px;
+    right: auto;
+    width: calc(100% - 4px);
+    background: repeating-linear-gradient(90deg, var(--azul-tecno) 0 6px, rgba(255,255,255,0.55) 6px 8px);
+    animation: loadfill 1.8s var(--ease-out) 0.3s forwards;
+    transform-origin: left;
+    transform: scaleX(0);
+}
+@keyframes loadfill { to { transform: scaleX(1); } }
+.loadbar-label {
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.04em;
+}
+.blink { animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0.15; } }
+
+/* === CAPA DE SEÇÃO === */
+.section-cover {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: var(--bg-soft);
+}
+.section-cover .section-kicker {
+    font-family: var(--font-pixel);
+    font-size: clamp(0.6rem, 0.85vw, 0.75rem);
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: clamp(0.9rem, 2vh, 1.4rem);
+}
+.section-cover h1 { font-size: clamp(1.6rem, 4.6vw, 3.2rem); margin-bottom: clamp(0.7rem, 1.4vh, 1.1rem); }
+.section-cover .section-subtitle {
+    color: var(--fg-soft);
+    font-size: clamp(0.95rem, 1.35vw, 1.15rem);
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+/* === PIXEL FRAME (moldura serrilhada, estilo dialog box de jogo) === */
+.pixel-frame {
+    position: relative;
+    isolation: isolate;
+}
+.pixel-frame::before {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    background: var(--accent-deep);
+    clip-path: polygon(
+        0 8px, 8px 8px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px,
+        100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 100%,
+        8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px)
+    );
+    z-index: -1;
+}
+.pixel-frame {
+    clip-path: polygon(
+        0 8px, 8px 8px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px,
+        100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 100%,
+        8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px)
+    );
+}
+
+/* === CARDS === */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    padding: clamp(0.85rem, 1.5vw, 1.35rem);
+    box-shadow: 0 6px 22px rgba(95, 136, 161, 0.08);
+    transition: all 0.3s var(--ease-out);
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+.card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(95, 136, 161, 0.16);
+}
+.card .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.6rem;
+}
+.card .card-icon-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.card .card-icon-box {
+    flex-shrink: 0;
+    width: clamp(30px, 3.4vw, 38px);
+    height: clamp(30px, 3.4vw, 38px);
+    background: var(--bg-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-deep);
+    clip-path: polygon(0 6px, 6px 6px, 6px 0, calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px));
+}
+.card .card-title {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--h3-size);
+    color: var(--fg);
+    line-height: 1.2;
+}
+.card .card-owner {
+    font-size: var(--label-size);
+    font-weight: 600;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+.card .card-body {
+    color: var(--fg-soft);
+    font-size: var(--small-size);
+    line-height: 1.5;
+}
+.card .card-body strong { color: var(--fg); font-weight: 600; }
+.card .gain {
+    margin-top: auto;
+    padding-top: 0.45rem;
+    border-top: 1px dashed var(--border);
+    font-size: var(--small-size);
+    color: var(--accent-deep);
+    font-weight: 600;
+}
+
+.badge {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.28rem 0.6rem;
+    font-family: var(--font-pixel);
+    font-size: clamp(0.64rem, 0.72vw, 0.7rem);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    clip-path: polygon(0 4px, 4px 4px, 4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px));
+}
+.badge.critica  { background: var(--azul-safira);  color: var(--branco); }
+.badge.alta     { background: var(--azul-filtrado); color: var(--branco); }
+.badge.moderada { background: var(--azul-tecno);   color: #2A5560; }
+.badge.baixa    { background: var(--cinza-seguro); color: #51646E; }
+
+/* === GRIDS === */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(0.7rem, 1.4vw, 1.2rem); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.7rem, 1.4vw, 1.2rem); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(0.7rem, 1.4vw, 1.2rem); }
+@media (max-width: 1150px) {
+    .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+/* === STAT === */
+.stat {
+    text-align: center;
+    padding: clamp(0.9rem, 1.6vw, 1.5rem);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    box-shadow: 0 6px 22px rgba(95, 136, 161, 0.08);
+}
+.stat .value {
+    font-family: var(--font-pixel);
+    font-size: clamp(1.4rem, 3vw, 2.3rem);
+    color: var(--accent);
+    line-height: 1.3;
+}
+.stat .label {
+    font-size: var(--label-size);
+    font-weight: 600;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.45rem;
+    font-family: var(--font-body);
+}
+.stat.deep .value { color: var(--accent-deep); }
+
+/* === BULLETS === */
+.bullets { list-style: none; padding: 0; display: flex; flex-direction: column; gap: clamp(0.4rem, 0.8vw, 0.7rem); }
+.bullets li {
+    position: relative;
+    padding-left: 1.4rem;
+    color: var(--fg-soft);
+    font-size: var(--body-size);
+    line-height: 1.45;
+}
+.bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.45em;
+    width: 8px; height: 8px;
+    background: var(--accent);
+}
+.bullets li strong { color: var(--fg); font-weight: 600; }
+
+/* === COMPARATIVO 2 PAINÉIS === */
+.compare { display: grid; grid-template-columns: 1fr auto 1fr; gap: clamp(0.8rem, 1.6vw, 1.4rem); align-items: stretch; }
+@media (max-width: 760px) { .compare { grid-template-columns: 1fr; } .compare .compare-arrow { transform: rotate(90deg); } }
+.compare .panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    padding: clamp(1rem, 1.8vw, 1.6rem);
+    box-shadow: 0 6px 22px rgba(95, 136, 161, 0.08);
+}
+.compare .panel.hoje { background: var(--bg-soft); }
+.compare .panel.futuro { border-color: rgba(86, 164, 187, 0.45); }
+.compare .panel-tag {
+    display: inline-block;
+    font-family: var(--font-pixel);
+    font-size: clamp(0.5rem, 0.62vw, 0.6rem);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    padding: 0.25rem 0.6rem;
+}
+.compare .hoje .panel-tag { background: var(--cinza-seguro); color: #51646E; }
+.compare .futuro .panel-tag { background: var(--azul-filtrado); color: var(--branco); }
+.compare .compare-arrow {
+    align-self: center;
+    font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+    color: var(--accent);
+    font-weight: 700;
+    font-family: var(--font-pixel);
+}
+
+/* === FLUXO NUMERADO === */
+.flow { display: flex; flex-direction: column; gap: clamp(0.45rem, 0.9vw, 0.75rem); }
+.flow-row {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.7rem, 1.1vw, 1rem);
+    padding: clamp(0.6rem, 1.1vw, 0.9rem) clamp(0.8rem, 1.4vw, 1.2rem);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(95, 136, 161, 0.07);
+    font-size: var(--small-size);
+}
+.flow-row .step-num {
+    background: var(--azul-filtrado);
+    color: var(--branco);
+    font-family: var(--font-pixel);
+    width: clamp(24px, 2.6vw, 30px);
+    height: clamp(24px, 2.6vw, 30px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+    clip-path: polygon(0 4px, 4px 4px, 4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px));
+}
+.flow-row .label { color: var(--fg); font-weight: 700; white-space: nowrap; }
+.flow-row .detail { color: var(--fg-soft); flex: 1; }
+
+/* === BARRA DE VIDA / XP (estilo jogo) === */
+.gamebar-wrap { display: flex; flex-direction: column; gap: 0.3rem; }
+.gamebar-top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    color: var(--fg-muted);
+    letter-spacing: 0.03em;
+}
+.gamebar-top .gb-name { color: var(--fg); }
+.gamebar {
+    height: 22px;
+    background: var(--bg-soft);
+    border: 3px solid var(--fg);
+    padding: 2px;
+    display: flex;
+    gap: 2px;
+}
+.gamebar .seg {
+    flex: 1;
+    background: var(--cinza-seguro);
+}
+.gamebar .seg.on { background: var(--accent); }
+.gamebar .seg.on.danger { background: var(--azul-safira); }
+.gamebar .seg.on.warn { background: var(--azul-tecno); }
+
+/* === BOSS CARD === */
+.boss-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: clamp(0.9rem, 1.5vw, 1.3rem);
+    box-shadow: 0 6px 22px rgba(95, 136, 161, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.boss-card .boss-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+}
+.boss-card .boss-name-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.boss-card .boss-icon {
+    width: clamp(32px, 3.6vw, 40px);
+    height: clamp(32px, 3.6vw, 40px);
+    background: var(--fg);
+    color: var(--azul-tecno);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    clip-path: polygon(0 6px, 6px 6px, 6px 0, calc(100% - 6px) 0, calc(100% - 6px) 6px, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 6px calc(100% - 6px), 0 calc(100% - 6px));
+}
+.boss-card .boss-name {
+    font-family: var(--font-pixel);
+    font-size: clamp(0.68rem, 0.95vw, 0.82rem);
+    color: var(--fg);
+}
+.boss-card .boss-body { color: var(--fg-soft); font-size: var(--small-size); line-height: 1.5; }
+.boss-card .boss-body strong { color: var(--fg); font-weight: 700; }
+
+/* === PIXEL ICON === */
+.pixel-icon { display: block; flex-shrink: 0; }
+.hud-spr { flex-shrink: 0; image-rendering: pixelated; }
+
+/* === FICHA DE PERSONAGEM (character sheet) === */
+.charsheet {
+    display: flex;
+    gap: clamp(1rem, 3vw, 2.2rem);
+    align-items: flex-start;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: clamp(1rem, 2vw, 1.6rem);
+    box-shadow: 0 6px 22px rgba(95, 136, 161, 0.08);
+}
+.cs-portrait {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    padding-right: clamp(1rem, 2vw, 1.6rem);
+    border-right: 1px dashed var(--border);
+    width: clamp(120px, 16vw, 160px);
+}
+.cs-portrait svg { image-rendering: pixelated; }
+.cs-name { font-family: var(--font-pixel); font-size: var(--label-size); color: var(--fg); text-align: center; }
+.cs-class { font-size: var(--small-size); color: var(--fg-muted); text-align: center; line-height: 1.4; }
+.cs-stats { flex: 1; display: flex; flex-direction: column; gap: 0.55rem; min-width: 0; }
+.cs-stat { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: 0.55rem; border-bottom: 1px dashed var(--border); font-size: var(--small-size); }
+.cs-stat:last-child { border-bottom: 0; padding-bottom: 0; }
+.cs-k { color: var(--fg-soft); min-width: 0; }
+.cs-v { font-family: var(--font-pixel); font-size: 0.68rem; color: var(--accent-deep); text-align: right; min-width: 0; overflow-wrap: break-word; line-height: 1.6; }
+@media (max-width: 760px) {
+    .charsheet { flex-direction: column; align-items: center; }
+    .cs-portrait { border-right: 0; border-bottom: 1px dashed var(--border); padding-right: 0; padding-bottom: 1rem; width: 100%; }
+    .cs-stat { flex-wrap: wrap; }
+    .cs-v { flex: 1 1 100%; text-align: left; }
+}
+
+/* === A FÁBRICA (cena única) === */
+.factory-scene {
+    position: relative;
+    width: 100%;
+    height: clamp(220px, 34vh, 300px);
+    background: linear-gradient(180deg, var(--bg-soft), var(--branco));
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+.factory-floor {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 22%;
+    background-image:
+        linear-gradient(45deg, var(--border) 25%, transparent 25%, transparent 75%, var(--border) 75%),
+        linear-gradient(45deg, var(--border) 25%, transparent 25%, transparent 75%, var(--border) 75%);
+    background-size: 26px 26px; background-position: 0 0, 13px 13px;
+    opacity: 0.4;
+}
+.factory-building {
+    position: absolute; left: 0; right: 0; bottom: 22%; width: 100%; height: 78%;
+}
+.factory-window { animation: factoryWindowGlow 3.4s ease-in-out infinite; }
+.factory-window:nth-of-type(2) { animation-delay: 0.7s; }
+.factory-window:nth-of-type(3) { animation-delay: 1.4s; }
+.factory-window:nth-of-type(4) { animation-delay: 2.1s; }
+@keyframes factoryWindowGlow { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+.factory-glow { animation: factoryWindowGlow 2.2s ease-in-out infinite; }
+.factory-smoke { opacity: 0; animation: factorySmoke 4s ease-out infinite; }
+.factory-smoke.s2 { animation-delay: 1.3s; }
+.factory-smoke.s3 { animation-delay: 2.6s; }
+@keyframes factorySmoke {
+    0%   { opacity: 0;   transform: translate(0, 0) scale(0.6); }
+    15%  { opacity: 0.7; }
+    100% { opacity: 0;   transform: translate(6px, -34px) scale(1.6); }
+}
+.factory-hero {
+    position: absolute; bottom: 22%; left: 30%;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 3px 2px rgba(0,0,0,0.18));
+    animation: factoryHeroWalk 8s ease-in-out infinite;
+}
+@keyframes factoryHeroWalk {
+    0%   { left: 30%; transform: scaleX(1); }
+    15%  { left: 30%; transform: scaleX(1); }
+    45%  { left: 68%; transform: scaleX(1); }
+    55%  { left: 68%; transform: scaleX(1); }
+    85%  { left: 30%; transform: scaleX(-1); }
+    100% { left: 30%; transform: scaleX(-1); }
+}
+
+/* === MAPA DA MISSÃO (world map / level select) === */
+.worldmap { position: relative; width: 100%; height: clamp(260px, 40vh, 400px); }
+.wm-path { position: absolute; inset: 0; width: 100%; height: 100%; }
+.wm-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+    background: none; border: 0; padding: 0; cursor: pointer;
+}
+.wm-node .wm-num {
+    width: clamp(30px, 4vw, 38px);
+    height: clamp(30px, 4vw, 38px);
+    background: var(--bg-card);
+    border: 3px solid var(--accent);
+    color: var(--accent-deep);
+    font-family: var(--font-pixel);
+    font-size: 0.8rem;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 10px rgba(95, 136, 161, 0.18);
+    transition: all 0.2s var(--ease-out);
+}
+.wm-node .wm-label { font-size: var(--label-size); font-family: var(--font-pixel); color: var(--fg-muted); white-space: nowrap; }
+.wm-node:hover .wm-num, .wm-node:focus-visible .wm-num { background: var(--accent); color: var(--branco); transform: scale(1.15); }
+.wm-node.boss .wm-num { border-color: var(--azul-safira); color: var(--azul-safira); }
+@media (max-width: 820px) {
+    .worldmap { position: static; height: auto; display: flex; flex-direction: column; gap: 0.6rem; }
+    .wm-path { display: none; }
+    .wm-node { position: static !important; transform: none !important; flex-direction: row; justify-content: flex-start; width: 100%; padding: 0.4rem 0; gap: 0.7rem; }
+}
+
+/* === DIORAMA (cena interativa: vitrine x bastidores) === */
+.diorama { position: relative; width: 100%; height: clamp(230px, 36vh, 320px); background: linear-gradient(180deg, var(--bg-soft), var(--branco)); border: 1px solid var(--border); overflow: hidden; }
+.dio-layer { position: absolute; inset: 0; overflow: hidden; }
+.dio-layer.front { clip-path: inset(0 0 0 var(--reveal, 32%)); background: var(--branco); }
+.dio-floor { position: absolute; left: 0; right: 0; bottom: 0; height: 34%; background-image:
+    linear-gradient(45deg, var(--border) 25%, transparent 25%, transparent 75%, var(--border) 75%),
+    linear-gradient(45deg, var(--border) 25%, transparent 25%, transparent 75%, var(--border) 75%);
+    background-size: 24px 24px; background-position: 0 0, 12px 12px; opacity: 0.55; }
+.dio-floor.calm { opacity: 0.22; }
+.dio-machine { position: absolute; bottom: 30%; color: var(--fg-muted); }
+.dio-machine .dio-fire { position: absolute; top: -12px; right: -6px; color: var(--azul-safira); animation: dioFlick 1.1s steps(2) infinite; }
+@keyframes dioFlick { 50% { transform: scale(0.85) translateY(-2px); } }
+.dio-npc { position: absolute; bottom: 30%; image-rendering: pixelated; }
+.dio-bubble { position: absolute; top: 6%; }
+.dio-spark, .dio-check { position: absolute; animation: dioTwinkle 1.7s ease-in-out infinite; }
+@keyframes dioTwinkle { 0%, 100% { opacity: 0.35; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.1); } }
+.dio-hero { position: absolute; bottom: 30%; image-rendering: pixelated; filter: drop-shadow(0 3px 2px rgba(0,0,0,0.18)); animation: dioHeroRun 5s linear infinite; }
+@keyframes dioHeroRun {
+    0%   { left: 6%;  transform: scaleX(1); }
+    45%  { left: 68%; transform: scaleX(1); }
+    50%  { left: 68%; transform: scaleX(-1); }
+    95%  { left: 6%;  transform: scaleX(-1); }
+    100% { left: 6%;  transform: scaleX(1); }
+}
+.dio-tag { position: absolute; top: 10px; z-index: 5; font-family: var(--font-pixel); font-size: var(--label-size); padding: 0.25rem 0.6rem; }
+.dio-tag-front { right: 10px; background: var(--azul-filtrado); color: var(--branco); }
+.dio-tag-back { left: 10px; background: var(--fg); color: var(--azul-tecno); }
+.dio-divider { position: absolute; top: 0; bottom: 0; left: var(--reveal, 32%); z-index: 6; border-left: 3px dashed var(--fg); pointer-events: none; }
+.dio-divider span {
+    position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%);
+    width: 28px; height: 28px; background: var(--fg); color: var(--azul-tecno);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-pixel); font-size: 0.9rem; border-radius: 50%;
+}
+.dio-slider {
+    position: absolute; inset: 0; width: 100%; height: 100%; margin: 0;
+    opacity: 0; cursor: ew-resize; z-index: 7;
+    -webkit-appearance: none; appearance: none; background: transparent;
+}
+.dio-hint { text-align: center; font-size: var(--small-size); color: var(--fg-muted); margin-top: 0.6rem; }
+
+/* === NAVEGAÇÃO (mapa de fases) === */
+.fp-dots {
+    position: fixed;
+    right: clamp(0.8rem, 1.5vw, 1.4rem);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    z-index: 50;
+}
+.fp-dots button {
+    width: 10px; height: 10px;
+    border: 0; padding: 0;
+    background: var(--cinza-cirurgico);
+    cursor: pointer;
+    opacity: 0.4;
+    transition: all 0.25s var(--ease-out);
+}
+.fp-dots button.active { background: var(--azul-filtrado); opacity: 1; transform: scale(1.4); }
+.fp-dots button:hover { opacity: 1; }
+
+.kb-hint {
+    position: fixed;
+    bottom: clamp(0.5rem, 1vw, 0.9rem);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-pixel);
+    font-size: clamp(0.5rem, 0.65vw, 0.62rem);
+    color: var(--fg-muted);
+    padding: 0.35rem 0.8rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 100;
+    letter-spacing: 0.02em;
+}
+.kb-hint kbd {
+    background: var(--bg-soft);
+    padding: 0.05rem 0.35rem;
+    color: var(--accent-deep);
+}
+
+/* === RESPONSIVO (altura) === */
+@media (max-height: 780px) {
+    :root { --slide-padding: clamp(1rem, 3vw, 2.4rem); }
+    .card .card-body { font-size: clamp(0.66rem, 0.85vw, 0.8rem); }
+    .card { gap: 0.35rem; }
+}
+@media (max-height: 620px) {
+    .kb-hint, .brand, .hud { display: none; }
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+    .reveal { opacity: 1; transform: none; }
+}
+
+/* === MODO MOBILE (≤ 820px) === */
+@media (max-width: 820px) {
+    html, body { overflow: auto; overflow-x: hidden; height: auto; }
+    #fullpage { transform: none !important; transition: none; width: 100%; }
+    .slide {
+        width: 100%;
+        height: auto;
+        min-height: 100dvh;
+        overflow: visible;
+        padding-top: clamp(4.5rem, 10vh, 6rem);
+        padding-bottom: clamp(2.5rem, 6vh, 4rem);
+    }
+    .slide:not(.is-active) { opacity: 1; transform: none; filter: none; }
+    .reveal { opacity: 1 !important; transform: none !important; animation: none !important; }
+    .content-slide { justify-content: flex-start; }
+    .title-slide, .section-cover { min-height: 100dvh; justify-content: center; }
+    .fp-dots, .kb-hint { display: none; }
+    .compare { grid-template-columns: 1fr; }
+    .compare .compare-arrow { transform: rotate(90deg); justify-self: center; }
+    .flow-row { flex-wrap: wrap; }
+    .flow-row .detail { flex-basis: 100%; }
+    .card .card-top { flex-wrap: wrap; }
+    .title-slide h1 { font-size: clamp(1.5rem, 7vw, 2.1rem); }
+    .title-slide .meta { flex-direction: column; gap: 0.35rem; align-items: center; }
+    .title-slide .meta span:not(:last-child)::after { content: none; }
+    .slide-num { display: none; }
+    .brand { position: absolute; }
+    .hud { position: absolute; top: clamp(0.9rem,1.8vw,1.5rem); }
+}
+</style>
+</head>
+<body>
+
+<!-- Símbolos de ícones "pixel art" reutilizáveis (grades 8x8, cor herdada via currentColor) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<g id="i-flame">
+  <rect x="3" y="0" width="2" height="1"/><rect x="2" y="1" width="4" height="1"/>
+  <rect x="1" y="2" width="6" height="1"/><rect x="1" y="3" width="6" height="1"/>
+  <rect x="0" y="4" width="8" height="1"/><rect x="0" y="5" width="8" height="1"/>
+  <rect x="1" y="6" width="6" height="1"/><rect x="2" y="7" width="4" height="1"/>
+</g>
+<g id="i-heart">
+  <rect x="1" y="0" width="2" height="1"/><rect x="5" y="0" width="2" height="1"/>
+  <rect x="0" y="1" width="8" height="1"/><rect x="0" y="2" width="8" height="1"/>
+  <rect x="0" y="3" width="8" height="1"/><rect x="1" y="4" width="6" height="1"/>
+  <rect x="2" y="5" width="4" height="1"/><rect x="3" y="6" width="2" height="1"/>
+</g>
+<g id="i-chip">
+  <rect x="2" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/>
+  <rect x="1" y="1" width="6" height="1"/><rect x="1" y="2" width="6" height="1"/>
+  <rect x="1" y="3" width="6" height="1"/><rect x="1" y="4" width="6" height="1"/>
+  <rect x="1" y="5" width="6" height="1"/><rect x="1" y="6" width="6" height="1"/>
+  <rect x="2" y="7" width="1" height="1"/><rect x="5" y="7" width="1" height="1"/>
+</g>
+<g id="i-trophy">
+  <rect x="1" y="0" width="6" height="1"/><rect x="0" y="1" width="8" height="1"/>
+  <rect x="0" y="2" width="8" height="1"/><rect x="1" y="3" width="6" height="1"/>
+  <rect x="2" y="4" width="4" height="1"/><rect x="2" y="5" width="4" height="1"/>
+  <rect x="1" y="6" width="6" height="1"/><rect x="0" y="7" width="8" height="1"/>
+</g>
+<g id="i-person">
+  <rect x="2" y="0" width="4" height="1"/><rect x="2" y="1" width="4" height="1"/>
+  <rect x="2" y="2" width="4" height="1"/><rect x="1" y="3" width="6" height="1"/>
+  <rect x="0" y="4" width="8" height="1"/><rect x="1" y="5" width="6" height="1"/>
+  <rect x="1" y="6" width="2" height="1"/><rect x="5" y="6" width="2" height="1"/>
+  <rect x="1" y="7" width="2" height="1"/><rect x="5" y="7" width="2" height="1"/>
+</g>
+<g id="i-link">
+  <rect x="1" y="0" width="4" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/>
+  <rect x="1" y="2" width="1" height="1"/><rect x="4" y="2" width="4" height="1"/>
+  <rect x="1" y="3" width="4" height="1"/><rect x="5" y="3" width="1" height="1"/>
+  <rect x="1" y="4" width="1" height="1"/><rect x="4" y="4" width="4" height="1"/>
+  <rect x="1" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/>
+  <rect x="1" y="6" width="4" height="1"/>
+</g>
+<g id="i-warning">
+  <rect x="3" y="0" width="2" height="1"/><rect x="2" y="1" width="4" height="1"/>
+  <rect x="2" y="2" width="4" height="1"/><rect x="1" y="3" width="6" height="1"/>
+  <rect x="1" y="4" width="6" height="1"/><rect x="0" y="5" width="8" height="1"/>
+  <rect x="0" y="6" width="8" height="1"/><rect x="0" y="7" width="8" height="1"/>
+</g>
+<g id="i-target">
+  <rect x="1" y="0" width="6" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/>
+  <rect x="0" y="2" width="1" height="1"/><rect x="2" y="2" width="4" height="1"/><rect x="7" y="2" width="1" height="1"/>
+  <rect x="0" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/>
+  <rect x="0" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/>
+  <rect x="0" y="5" width="1" height="1"/><rect x="2" y="5" width="4" height="1"/><rect x="7" y="5" width="1" height="1"/>
+  <rect x="0" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/>
+  <rect x="1" y="7" width="6" height="1"/>
+</g>
+<g id="i-gear">
+  <rect x="2" y="0" width="4" height="1"/><rect x="1" y="1" width="6" height="1"/>
+  <rect x="0" y="2" width="8" height="1"/><rect x="0" y="3" width="8" height="1"/>
+  <rect x="0" y="4" width="8" height="1"/><rect x="0" y="5" width="8" height="1"/>
+  <rect x="1" y="6" width="6" height="1"/><rect x="2" y="7" width="4" height="1"/>
+</g>
+<g id="i-check">
+  <rect x="1" y="4" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/>
+  <rect x="3" y="6" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/>
+  <rect x="5" y="4" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/>
+  <rect x="7" y="2" width="1" height="1"/>
+</g>
+<g id="i-spark">
+  <rect x="3" y="0" width="2" height="2"/><rect x="3" y="6" width="2" height="2"/>
+  <rect x="0" y="3" width="2" height="2"/><rect x="6" y="3" width="2" height="2"/>
+  <rect x="3" y="3" width="2" height="2"/>
+</g>
+<g id="i-box">
+  <rect x="0" y="1" width="8" height="1"/><rect x="0" y="1" width="1" height="6"/>
+  <rect x="7" y="1" width="1" height="6"/><rect x="0" y="6" width="8" height="1"/>
+  <rect x="0" y="3" width="8" height="1"/><rect x="3" y="1" width="1" height="6"/>
+</g>
+<g id="i-spool">
+  <rect x="1" y="0" width="6" height="1.4"/><rect x="1" y="6.6" width="6" height="1.4"/>
+  <rect x="3" y="1.4" width="2" height="1.3"/><rect x="3" y="2.7" width="2" height="1.3"/>
+  <rect x="3" y="4" width="2" height="1.3"/><rect x="3" y="5.3" width="2" height="1.3"/>
+</g>
+<g id="i-laser">
+  <rect x="0" y="2" width="3" height="4"/><rect x="3" y="3.3" width="4.3" height="1.4"/>
+  <rect x="7" y="1.3" width="1" height="1"/><rect x="7.3" y="0" width="0.6" height="1"/>
+</g>
+<g id="i-drop">
+  <rect x="3" y="0" width="2" height="1"/><rect x="2" y="1" width="4" height="1"/>
+  <rect x="1.3" y="2" width="5.4" height="1"/><rect x="1" y="3" width="6" height="3"/>
+  <rect x="1.6" y="6" width="4.8" height="1"/><rect x="2.6" y="7" width="2.8" height="1"/>
+</g>
+<g id="i-door">
+  <rect x="1" y="0" width="6" height="1"/><rect x="1" y="0" width="1" height="8"/>
+  <rect x="6" y="0" width="1" height="8"/><rect x="1" y="7" width="6" height="1"/>
+  <rect x="3" y="2.6" width="2" height="2"/><rect x="5" y="4.6" width="0.9" height="0.9"/>
+</g>
+<g id="i-server">
+  <rect x="1" y="0.3" width="6" height="1.3"/><rect x="1" y="2.2" width="6" height="1.3"/>
+  <rect x="1" y="4.1" width="6" height="1.3"/><rect x="1" y="6" width="6" height="1.3"/>
+  <rect x="5.6" y="0.6" width="0.9" height="0.7" fill="#9CE5EE"/>
+  <rect x="5.6" y="2.5" width="0.9" height="0.7" fill="#9CE5EE"/>
+  <rect x="5.6" y="4.4" width="0.9" height="0.7" fill="#9CE5EE"/>
+  <rect x="5.6" y="6.3" width="0.9" height="0.7" fill="#9CE5EE"/>
+</g>
+<g id="i-bubble">
+  <rect x="0" y="0" width="12" height="7" fill="#FFFFFF" stroke="#2A3B44" stroke-width="1"/>
+  <rect x="1" y="7" width="2" height="1" fill="#FFFFFF"/>
+  <rect x="0" y="8" width="1" height="1" fill="#FFFFFF"/>
+  <rect x="2" y="2" width="1.4" height="1.4" fill="#2A3B44"/>
+  <rect x="5.3" y="2" width="1.4" height="1.4" fill="#2A3B44"/>
+  <rect x="8.6" y="2" width="1.4" height="1.4" fill="#2A3B44"/>
+</g>
+<g id="spr-hero">
+  <rect x="7" y="0" width="2" height="1.4" fill="#9CE5EE"/>
+  <rect x="7.4" y="1.4" width="1.2" height="1.3" fill="#5F88A1"/>
+  <rect x="4" y="2.7" width="8" height="0.9" fill="#5F88A1"/>
+  <rect x="4" y="3.6" width="8" height="4" fill="#56A4BB"/>
+  <rect x="4.4" y="3.9" width="2" height="1" fill="#9CE5EE"/>
+  <rect x="5" y="5.6" width="6" height="1.4" fill="#2A3B44"/>
+  <rect x="5.6" y="5.9" width="1.6" height="0.9" fill="#9CE5EE"/>
+  <rect x="8.8" y="5.9" width="1.6" height="0.9" fill="#9CE5EE"/>
+  <rect x="5.5" y="7.7" width="5" height="1" fill="#5F88A1"/>
+  <rect x="3" y="8.7" width="10" height="6" fill="#56A4BB"/>
+  <rect x="3.5" y="9" width="2.2" height="1" fill="#9CE5EE"/>
+  <rect x="6.3" y="10.6" width="3.4" height="2.8" fill="#2A3B44"/>
+  <rect x="6.7" y="11" width="2.6" height="2" fill="#9CE5EE"/>
+  <rect x="0.4" y="8.9" width="2.4" height="3" fill="#5F88A1"/>
+  <rect x="0.4" y="11.9" width="2.4" height="1.3" fill="#2A3B44"/>
+  <rect x="13.2" y="8.9" width="2.4" height="3" fill="#5F88A1"/>
+  <rect x="13.2" y="11.9" width="2.4" height="1.3" fill="#2A3B44"/>
+  <rect x="13.3" y="4" width="3" height="1.2" fill="#2A3B44"/>
+  <rect x="14.1" y="4.6" width="1.4" height="4.4" fill="#2A3B44"/>
+  <rect x="3.5" y="14.7" width="9" height="1" fill="#5F88A1"/>
+  <rect x="4" y="15.7" width="3" height="3.8" fill="#2A3B44"/>
+  <rect x="9" y="15.7" width="3" height="3.8" fill="#2A3B44"/>
+  <rect x="3.4" y="19.5" width="4.2" height="1" fill="#5F88A1"/>
+  <rect x="8.4" y="19.5" width="4.2" height="1" fill="#5F88A1"/>
+</g>
+<g id="spr-npc">
+  <rect x="3" y="0" width="6" height="1" fill="#5F88A1"/>
+  <rect x="2" y="1" width="8" height="1" fill="#56A4BB"/>
+  <rect x="3.5" y="2" width="5" height="3.6" fill="#D9E4E8"/>
+  <rect x="4.3" y="3.3" width="0.9" height="0.9" fill="#2A3B44"/>
+  <rect x="6.8" y="3.3" width="0.9" height="0.9" fill="#2A3B44"/>
+  <rect x="4.5" y="5.5" width="3" height="0.8" fill="#818286"/>
+  <rect x="2" y="6.2" width="8" height="5.3" fill="#818286"/>
+  <rect x="2" y="6.2" width="8" height="1" fill="#9CE5EE"/>
+  <rect x="0.3" y="7" width="1.8" height="3.6" fill="#818286"/>
+  <rect x="0.3" y="10.5" width="1.8" height="1" fill="#D9E4E8"/>
+  <rect x="9.9" y="7" width="1.8" height="3.6" fill="#818286"/>
+  <rect x="9.9" y="10.5" width="1.8" height="1" fill="#D9E4E8"/>
+  <rect x="2" y="11.5" width="8" height="0.9" fill="#2A3B44"/>
+  <rect x="3" y="12.4" width="2.6" height="4.2" fill="#2A3B44"/>
+  <rect x="6.4" y="12.4" width="2.6" height="4.2" fill="#2A3B44"/>
+  <rect x="2.7" y="16.5" width="3.2" height="1" fill="#5F88A1"/>
+  <rect x="6.1" y="16.5" width="3.2" height="1" fill="#5F88A1"/>
+</g>
+</defs>
+</svg>
+
+<div id="fullpage">
+
+<!-- === SLIDE 01 — TÍTULO / START SCREEN === -->
+<section class="slide title-slide">
+    <div class="container">
+        <img class="logo reveal" src="assets/image4.png" alt="MSB Medical System do Brasil">
+        <div class="reveal"><span class="eyebrow">TI · Diagnóstico de Área</span></div>
+        <h1 class="reveal">MISSÃO TI<br>2027</h1>
+        <p class="subtitle reveal">Sair do modo sobrevivência.<br>Entrar no modo estratégico.</p>
+        <div class="loadbar reveal"><div class="fill"></div></div>
+        <p class="loadbar-label reveal blink">CARREGANDO DIAGNÓSTICO...</p>
+        <div class="meta reveal">
+            <span>Setembro 2026</span>
+            <span>1 jogador</span>
+            <span>0 backup</span>
+        </div>
+    </div>
+    <svg class="wave-motif" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,64 C240,110 480,20 720,54 C960,88 1200,30 1440,70 L1440,120 L0,120 Z" fill="rgba(255,255,255,0.10)"/>
+        <path d="M0,84 C260,120 520,44 760,74 C1000,104 1240,54 1440,90 L1440,120 L0,120 Z" fill="rgba(156,229,238,0.18)"/>
+    </svg>
+    <span class="slide-num" style="color: rgba(255,255,255,0.7)">01 / 15</span>
+</section>
+
+<!-- === SLIDE 02 — MAPA DA MISSÃO (world map / level select) === -->
+<section class="slide content-slide" data-slide="worldmap">
+    <div class="brand"><img src="assets/image1.png" alt="MSB"></div>
+    <div class="hud"><svg class="hud-spr pixel-icon" viewBox="0 0 16 20" width="18" height="22"><use href="#spr-hero"/></svg><span class="hud-tag">MAPA</span></div>
+    <div class="container">
+        <span class="eyebrow reveal">Mapa da missão</span>
+        <h2 class="reveal">Escolha uma <span class="accent">fase</span></h2>
+        <p class="lead reveal">Clique em qualquer ponto do caminho para ir direto até lá, ou siga a trilha na ordem sugerida.</p>
+        <div class="worldmap reveal">
+            <svg class="wm-path" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M4,78 L14.4,26 L24.9,78 L35.3,26 L45.8,78 L56.2,26 L66.7,78 L77.1,26 L87.6,78 L98,26" fill="none" stroke="var(--border-strong)" stroke-width="0.5" stroke-dasharray="2 1.6"/>
+            </svg>
+            <button class="wm-node" data-goto="fase0" style="left:4%; top:78%"><span class="wm-num">0</span><span class="wm-label">Tabuleiro</span></button>
+            <button class="wm-node" data-goto="fase1" style="left:14.4%; top:26%"><span class="wm-num">1</span><span class="wm-label">Personagem</span></button>
+            <button class="wm-node" data-goto="fase2" style="left:24.9%; top:78%"><span class="wm-num">2</span><span class="wm-label">Cortina</span></button>
+            <button class="wm-node" data-goto="fase3" style="left:35.3%; top:26%"><span class="wm-num">3</span><span class="wm-label">Chefões</span></button>
+            <button class="wm-node" data-goto="fase4" style="left:45.8%; top:78%"><span class="wm-num">4</span><span class="wm-label">Inventário</span></button>
+            <button class="wm-node" data-goto="fase5" style="left:56.2%; top:26%"><span class="wm-num">5</span><span class="wm-label">Vida</span></button>
+            <button class="wm-node" data-goto="fase6" style="left:66.7%; top:78%"><span class="wm-num">6</span><span class="wm-label">2027</span></button>
+            <button class="wm-node" data-goto="fase7" style="left:77.1%; top:26%"><span class="wm-num">7</span><span class="wm-label">Diagnóstico</span></button>
+            <button class="wm-node" data-goto="fase8" style="left:87.6%; top:78%"><span class="wm-num">8</span><span class="wm-label">Pedido</span></button>
+            <button class="wm-node boss" data-goto="fase9" style="left:98%; top:26%"><span class="wm-num">9</span><span class="wm-label">Final</span></button>
+        </div>
+    </div>
+    <span class="slide-num">02 / 15</span>
+</section>
+
+<!-- === SLIDE 03 — O PROBLEMA === -->
+<section class="slide content-slide" data-slide="fase0">
+    <div class="brand"><img src="assets/image1.png" alt="MSB"></div>
+    <div class="hud"><svg class="hud-spr pixel-icon" viewBox="0 0 16 20" width="18" height="22"><use href="#spr-hero"/></svg><span class="hud-tag">FASE 0</span></div>
+    <div class="container">
+        <span class="eyebrow reveal">O tabuleiro</span>
+        <h2 class="reveal">TI joga sem <span class="accent">mapa</span></h2>
+        <p class="lead reveal">A MSB projeta a nova plataforma industrial de Salvador com anos de antecedência — terreno, FINEP, funding, metas de faturamento até 2036. A área de TI ainda não tem metas definidas para 2027: o trabalho nasce e morre no chamado do dia.</p>
+        <div class="grid-2 reveal">
+            <div class="card">
+                <div class="card-top"><div class="card-title">Como a MSB planeja</div></div>
+                <div class="card-body">Marco 2026 aprovado na FINEP, funding estruturado, unidade de ~3.500 m² desenhada, metas de faturamento e EBITDA traçadas até 2036.</div>
+            </div>
+            <div class="card">
+                <div class="card-top"><div class="card-title">Como TI opera hoje</div></div>
+                <div class="card-body"><strong>Sem metas definidas.</strong> Prioridade é decidida pelo próximo chamado, não por um plano — sem antecedência para estruturar nada.</div>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">03 / 15</span>
+</section>
+
+<!-- === SLIDE 04 — O PERSONAGEM SOLO (ficha de personagem) === -->
+<section class="slide content-slide" data-slide="fase1">
+    <div class="brand"><img src="assets/image1.png" alt="MSB"></div>
+    <div class="hud"><svg class="hud-spr pixel-icon" viewBox="0 0 16 20" width="18" height="22"><use href="#spr-hero"/></svg><span class="hud-tag">FASE 1</span></div>
+    <div class="container">
+        <span class="eyebrow reveal">O personagem</span>
+        <h2 class="reveal">Um jogador. <span class="accent">Sem</span> guilda.</h2>
+        <p class="lead reveal">A área de TI é hoje 1 pessoa, nível assistente, reportando direto ao Diretor Industrial — sem analista, técnico ou time de apoio para dividir a carga.</p>
+        <div class="charsheet reveal">
+            <div class="cs-portrait">
+                <svg viewBox="0 0 16 20" width="88" height="110" shape-rendering="crispEdges"><use href="#spr-hero"/></svg>
+                <div class="cs-name">JOGADOR TI</div>
+                <div class="cs-class">Classe: Assistente<br><span class="accent">Executando: Especialista</span></div>
+            </div>
+            <div class="cs-stats">
+                <div class="cs-stat"><span class="cs-k">HP — pessoas na área</span><span class="cs-v">1</span></div>
+                <div class="cs-stat"><span class="cs-k">Aliados / backup técnico</span><span class="cs-v">0</span></div>
+                <div class="cs-stat"><span class="cs-k">Sistema crítico sob guarda</span><span class="cs-v">D365</span></div>
+                <div class="cs-stat"><span class="cs-k">Níveis de gestão até o chefe (Diretor)</span><span class="cs-v">0</span></div>
+                <div class="cs-stat"><span class="cs-k">Inventário de funções acumuladas</span><span class="cs-v">Help desk + D365 + Infra + Projetos</span></div>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">04 / 15</span>
+</section>
+
+<!-- === SLIDE 05 — MAPA DA FÁBRICA (hub de dependência) === -->
+<section class="slide content-slide" data-slide="factorymap">
+    <div class="brand"><img src="assets/image1.png" alt="MSB"></div>
+    <div class="hud"><svg class="hud-spr pixel-icon" viewBox="0 0 16 20" width="18" height="22"><use href="#spr-hero"/></svg><span class="hud-tag">MAPA</span></div>
+    <div class="container">
+        <span class="eyebrow reveal">A fábrica</span>
+        <h2 class="reveal">Uma <span class="accent">fábrica</span>.</h2>
+        <p class="lead reveal">Por fora, uma fábrica só. Por dentro, tudo depende do mesmo servidor — é o TI que circula sozinho, mantendo a luz acesa.</p>
+        <div class="factory-scene reveal">
+            <svg class="factory-building" viewBox="0 0 300 130" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+                <rect x="8" y="78" width="44" height="42" fill="var(--bg-soft)" stroke="var(--fg)" stroke-width="2"/>
+                <rect x="16" y="96" width="16" height="24" fill="var(--fg)"/>
+                <rect x="30" y="50" width="240" height="70" fill="var(--bg-card)" stroke="var(--fg)" stroke-width="2"/>
+                <polygon points="30,50 60,28 90,50 120,28 150,50 180,28 210,50 240,28 270,50" fill="var(--accent-deep)" stroke="var(--fg)" stroke-width="2"/>
+                <rect x="233" y="6" width="14" height="26" fill="var(--fg)"/>
+                <circle class="factory-smoke s1" cx="240" cy="4" r="4" fill="var(--cinza-seguro)"/>
+                <circle class="factory-smoke s2" cx="246" cy="4" r="5" fill="var(--cinza-seguro)"/>
+                <circle class="factory-smoke s3" cx="238" cy="4" r="6" fill="var(--cinza-seguro)"/>
+                <rect class="factory-window" x="48" y="62" width="18" height="18" fill="var(--accent-light)" stroke="var(--fg)" stroke-width="1.5"/>
+                <rect class="factory-window" x="96" y="62" width="18" height="18" fill="var(--accent-light)" stroke="var(--fg)" stroke-width="1.5"/>
+                <rect class="factory-window" x="186" y="62" width="18" height="18" fill="var(--accent-light)" stroke="var(--fg)" stroke-width="1.5"/>
+                <rect class="factory-window" x="234" y="62" width="18" height="18" fill="var(--accent-light)" stroke="var(--fg)" stroke-width="1.5"/>
+                <rect x="128" y="88" width="56" height="32" fill="var(--fg)"/>
+                <rect x="132" y="93" width="48" height="2.4" fill="var(--accent)"/>
+                <rect x="132" y="99" width="48" height="2.4" fill="var(--accent)"/>
+                <rect x="132" y="105" width="48" height="2.4" fill="var(--accent)"/>
+                <rect x="132" y="111" width="48" height="2.4" fill="var(--accent)"/>
+                <rect class="factory-glow" x="146" y="117" width="20" height="3" fill="var(--accent-light)"/>
+            </svg>
+            <div class="factory-floor"></div>
+            <svg class="factory-hero pixel-icon" viewBox="0 0 16 20" width="46" height="57" shape-rendering="crispEdges"><use href="#spr-hero"/></svg>
+        </div>
+    </div>
+    <span class="slide-num">05 / 15</span>
+</section>
+
+<!-- === SLIDE 06 — VITRINE x BASTIDORES (diorama interativo) === -->
+<section class="slide content-slide" data-slide="fase2">
+    <div class="brand"><img src="assets/image1.png" alt="MSB"></div>
+    <div class="hud"><svg class="hud-spr pixel-icon" viewBox="0 0 16 20" width="18" height="22"><use href="#spr-hero"/></svg><span class="hud-tag">FASE 2</span></div>
+    <div class="container">
+        <span class="eyebrow reveal">A cortina</span>
+        <h2 class="reveal">O que a empresa <span class="accent">vê</span> — e o que acontece <span class="accent">por trás</span></h2>
+        <div class="diorama reveal">
+            <div class="dio-tag dio-tag-back">OS BASTIDORES</div>
+            <div class="dio-tag dio-tag-front">A VITRINE</div>
+            <div class="dio-layer dio-back">
+                <div class="dio-floor"></div>
+                <div class="dio-machine" style="left:14%"><svg class="pixel-icon" viewBox="0 0 8 8" width="26" height="26" shape-rendering="crispEdges"><use href="#i-spool" fill="#818286"/></svg><svg class="dio-fire pixel-icon" viewBox="0 0 8 8" width="16" height="16" shape-rendering="crispEdges"><use href="#i-flame" fill="#5F88A1"/></svg></div>
+                <div class="dio-machine" style="left:44%"><svg class="pixel-icon" viewBox="0 0 8 8" width="24" height="24" shape-rendering="crispEdges"><use href="#i-laser" fill="#818286"/></svg><svg class="dio-fire pixel-icon" viewBox="0 0 8 8" width="14" height="14" shape-rendering="crispEdges"><use href="#i-warning" fill="#5F88A1"/></svg></div>
+                <svg class="dio-npc pixel-icon" style="left:86%" viewBox="0 0 12 18" width="30" height="45" shape-rendering="crispEdges"><use href="#spr-npc"/></svg>
+                <svg class="dio-hero pixel-icon" viewBox="0 0 16 20" width="40" height="50" shape-rendering="crispEdges"><use href="#spr-hero"/></svg>
+            </div>
+            <div class="dio-layer front">
+                <div class="dio-floor calm"></div>
+                <svg class="dio-npc pixel-icon" style="left:14%" viewBox="0 0 12 18" width="30" height="45" shape-rendering="crispEdges"><use href="#spr-npc"/></svg>
+                <svg class="dio-bubble pixel-icon" style="left:20%" viewBox="0 0 12 9" width="28" height="21" shape-rendering="crispEdges"><use href="#i-bubble"/></svg>
+                <svg class="dio-npc pixel-icon" style="left:38%" viewBox="0 0 12 18" width="30" height="45" shape-rendering="crispEdges"><use href="#spr-npc"/></svg>
+                <svg class="dio-bubble pixel-icon" style="left:44%" viewBox="0 0 12 9" width="28" height="21" shape-rendering="crispEdges"><use href="#i-bubble"/></svg>
+                <svg class="dio-npc pixel-icon" style="left:60%" viewBox="0 0 12 18" width="30" height="45" shape-rendering="crispEdges"><use href="#spr-npc"/></svg>
+                <svg class="dio-spark pixel-icon" style="left:8%;top:16%" viewBox="0 0 8 8" width="16" height="16" shape-rendering="crispEdges"><use href="#i-spark" fill="#56A4BB"/></svg>
+                <svg class="dio-check pixel-icon" style="left:32%;top:14%" viewBox="0 0 8 8" width="18" height="18" shape-rendering="crispEdges"><use href="#i-check" fill="#5F88A1"/></svg>
+                <svg class="dio-spark pixel-icon" style="left:78%;top:22%" viewBox="0 0 8 8" width="14" height="14" shape-rendering="crispEdges"><use href="#i-spark" fill="#56A4BB"/></svg>
+            </div>
+            <div class="dio-divider"><span>⇔</span></div>
+            <input type="range" class="dio-slider" min="0" max="100" value="32" aria-label="Arraste para revelar os bastidores">
+        </div>
+        <p class="dio-hint reveal">↔ arraste para puxar a cortina e ver o que tem por trás</p>
+    </div>
+    <span class="slide-num">06 / 15</span>
+</section>
+
+<!-- === SLIDE 07 — CHEFÕES / OBSTÁCULOS === -->
+<section class="slide content-slide" data-slide="fase3">
+    <div class="brand"><img src="assets/image1.png" alt="MSB"></div>
+    <div class="hud"><svg class="hud-spr pixel-icon" viewBox="0 0 16 20" width="18" height="22"><use href="#spr-hero"/></svg><span class="hud-tag">FASE 3</span></div>
+    <div class="container">
+        <span class="eyebrow reveal">Chefões da fase</span>
+        <h2 class="reveal">Os <span class="accent">obstáculos</span> de todo dia</h2>
+        <div class="grid-3 reveal">
+            <div class="boss-card">
+                <div class="boss-top">
+                    <div class="boss-name-row"><div class="boss-icon"><svg class="pixel-icon" viewBox="0 0 8 8" width="20" height="20" shape-rendering="crispEdges"><use href="#i-target" fill="currentColor"/></svg></div><span class="boss-name">Sem Metas</span></div>
+                    <span class="badge critica">Crítica</span>
+                </div>
+                <div class="boss-body">Não há direção definida para 2027 — cada prioridade é decidida na hora, não planejada.</div>
+            </div>
+            <div class="boss-card">
+                <div class="boss-top">
+                    <div class="boss-name-row"><div class="boss-icon"><svg class="pixel-icon" viewBox="0 0 8 8" width="20" height="20" shape-rendering="crispEdges"><use href="#i-flame" fill="currentColor"/></svg></div><span class="boss-name">Apaga-Incêndio</span></div>
+                    <span class="badge critica">Crítica</span>
+                </div>
+                <div class="boss-body">Rotina 100% reativa, sem antecedência para planejar melhorias ou estruturas.</div>
+            </div>
+            <div class="boss-card">
+                <div class="boss-top">
+                    <div class="boss-name-row"><div class="boss-icon"><svg class="pixel-icon" viewBox="0 0 8 8" width="20" height="20" shape-rendering="crispEdges"><use href="#i-warning" fill="currentColor"/></svg></div><span class="boss-name">Invisível</span></div>
+                    <span class="badge alta">Alta</span>
+                </div>
+                <div class="boss-body">Setor só ganha visibilidade quando algo quebra — nunca pelo que funciona todo dia.</div>
+            </div>
+            <div class="boss-card">
+                <div class="boss-top">
+                    <div class="boss-name-row"><div class="boss-icon"><svg class="pixel-icon" viewBox="0 0 8 8" width="20" height="20" shape-rendering="crispEdges"><use href="#i-link" fill="currentColor"/></svg></div><span class="boss-name">Fila de Fora</span></div>
+                    <span class="badge alta">Alta</span>
+                </div>
+                <div class="boss-body">Demandas de outras áreas ultrapassam o help desk — TI passa a trabalhar pelas áreas, não só para elas.</div>
+            </div>
+            <div class="boss-card">
+                <div class="boss-top">
+                    <div class="boss-name-row"><div class="boss-icon"><svg class="pixel-icon" viewBox="0 0 8 8" width="20" height="20" shape-rendering="crispEdges"><use href="#i-chip" fill="currentColor"/></svg></div><span class="boss-name">Ponto Único</span></div>
+                    <span class="badge critica">Crítica</span>
+                </div>
+                <div class="boss-body">Todo o D365 depende de uma pessoa só para resolver erro — sem ela, o sistema para.</div>
+            </div>
+            <div class="boss-card">
+                <div class="boss-top">
+                    <div class="boss-name-row"><div class="boss-icon"><svg class="pixel-icon" viewBox="0 0 8 8" width="20" height="20" shape-rendering="crispEdges"><use href="#i-gear" fill="currentColor"/></svg></div><span class="boss-name">Sem Alinhamento</span></div>
+                    <span class="badge moderada">Moderada</span>
+                </div>
+                <div class="boss-body">Trabalho acontece sem visibilidade da estratégia geral da empresa.</div>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">07 / 15</span>
+</section>
+
+<!-- === SLIDE 08 — TROCA DE INVENTÁRIO (sai / entra) === -->
+<section class="slide content-slide" data-slide="fase4">
+    <div class="brand"><img src="assets/image1.png" alt="MSB"></div>
+    <div class="hud"><svg class="hud-spr pixel-icon" viewBox="0 0 16 20" width="18" height="22"><use href="#spr-hero"/></svg><span class="hud-tag">FASE 4</span></div>
+    <div class="container">
+        <span class="eyebrow reveal">Troca de inventário</span>
+        <h2 class="reveal">Itens no <span class="accent">slot errado</span></h2>
+        <div class="compare reveal">
+            <div class="panel hoje">
+                <span class="panel-tag">Sai do TI</span>
+                <ul class="bullets">
+                    <li>Uso básico do sistema que, <strong>mesmo explicado</strong>, volta pro TI resolver</li>
+                    <li>Tarefas de operação do D365 que deveriam ficar com o <strong>dono do processo</strong> em cada área</li>
+                    <li>Hoje isso consome tempo que deveria ir para infraestrutura e planejamento</li>
+                </ul>
+            </div>
+            <div class="compare-arrow">⇄</div>
+            <div class="panel futuro">
+                <span class="panel-tag">Entra no TI</span>
+                <ul class="bullets">
+                    <li><strong>Integração de IoT</strong> — nova fronteira tecnológica que ainda não tem dono claro</li>
+                    <li>Espaço natural para TI liderar a próxima onda de automação da fábrica</li>
+                    <li>Só é viável se o tempo hoje gasto em tarefas do slot errado for liberado</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">08 / 15</span>
+</section>
+
+<!-- === SLIDE 09 — PONTO ÚNICO DE FALHA === -->
+<section class="slide content-slide" data-slide="fase5">
+    <div class="brand"><img src="assets/image1.png" alt="MSB"></div>
+    <div class="hud"><svg class="hud-spr pixel-icon" viewBox="0 0 16 20" width="18" height="22"><use href="#spr-hero"/></svg><span class="hud-tag">FASE 5</span></div>
+    <div class="container">
+        <span class="eyebrow reveal">Vida do sistema</span>
+        <h2 class="reveal">Se eu falto, o <span class="accent">D365 para</span></h2>
+        <p class="lead reveal">Outras áreas dependem totalmente desta pessoa para resolver qualquer erro de sistema. O inverso não existe: TI não depende de ninguém para operar — o que também significa que ninguém mais consegue operar sem TI.</p>
+        <div class="grid-2 reveal">
+            <div class="gamebar-wrap">
+                <div class="gamebar-top"><span class="gb-name">DEPENDÊNCIA DE OUTRAS ÁREAS EM TI</span><span>8/10 → meta 4/10</span></div>
+                <div class="gamebar"><div class="seg on"></div><div class="seg on"></div><div class="seg on"></div><div class="seg on"></div><div class="seg on"></div><div class="seg on"></div><div class="seg on"></div><div class="seg on"></div><div class="seg"></div><div class="seg"></div></div>
+            </div>
+            <div class="gamebar-wrap">
+                <div class="gamebar-top"><span class="gb-name">BACKUP / CONTINUIDADE SEM ESSA PESSOA</span><span>3/10 → meta 6/10</span></div>
+                <div class="gamebar"><div class="seg on danger"></div><div class="seg on danger"></div><div class="seg on danger"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div></div>
+            </div>
+        </div>
+        <div class="grid-2 reveal">
+            <div class="card">
+                <div class="card-icon-row"><div class="card-icon-box"><svg class="pixel-icon" viewBox="0 0 8 8" width="20" height="20" shape-rendering="crispEdges"><use href="#i-heart" fill="currentColor"/></svg></div><div class="card-title">Leitura direta</div></div>
+                <div class="card-body">Autonomia total, risco total: a continuidade do sistema mais crítico da operação está amarrada à disponibilidade de uma única pessoa, o tempo todo.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon-row"><div class="card-icon-box"><svg class="pixel-icon" viewBox="0 0 8 8" width="20" height="20" shape-rendering="crispEdges"><use href="#i-link" fill="currentColor"/></svg></div><div class="card-title">Plano para desconcentrar</div></div>
+                <ul class="bullets">
+                    <li><strong>Usuário-chave</strong> em cada área, treinado no D365</li>
+                    <li>TI entra só no <strong>segundo nível</strong> de suporte</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">09 / 15</span>
+</section>
+
+<!-- === SLIDE 10 — O MAPA AGUENTA 2027? === -->
+<section class="slide content-slide" data-slide="fase6">
+    <div class="brand"><img src="assets/image1.png" alt="MSB"></div>
+    <div class="hud"><svg class="hud-spr pixel-icon" viewBox="0 0 16 20" width="18" height="22"><use href="#spr-hero"/></svg><span class="hud-tag">FASE 6</span></div>
+    <div class="container">
+        <span class="eyebrow reveal">Próximo ciclo</span>
+        <h2 class="reveal">O mapa aguenta <span class="accent">2027</span>?</h2>
+        <p class="lead reveal"><strong>Sim — mas não do jeito que está.</strong> A estrutura aguenta o volume de trabalho do próximo ciclo; não aguenta a forma como esse trabalho é hoje distribuído em uma única pessoa.</p>
+        <div class="grid-2 reveal">
+            <div class="card">
+                <div class="card-top"><div class="card-title">O que aguenta</div><span class="badge moderada">OK</span></div>
+                <div class="card-body">A demanda de sistemas e infraestrutura da MSB para 2027 é administrável — não é um problema de volume de empresa.</div>
+            </div>
+            <div class="card">
+                <div class="card-top"><div class="card-title">O que não aguenta</div><span class="badge critica">Risco</span></div>
+                <div class="card-body">Uma pessoa, nível assistente, fazendo função de assistente + analista + quase tudo do TI. Isso não escala para o próximo ciclo.</div>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">10 / 15</span>
+</section>
+
+<!-- === SLIDE 11 — DIAGNÓSTICO === -->
+<section class="slide content-slide" data-slide="fase7">
+    <div class="brand"><img src="assets/image1.png" alt="MSB"></div>
+    <div class="hud"><svg class="hud-spr pixel-icon" viewBox="0 0 16 20" width="18" height="22"><use href="#spr-hero"/></svg><span class="hud-tag">FASE 7</span></div>
+    <div class="container">
+        <span class="eyebrow reveal">Diagnóstico</span>
+        <h2 class="reveal">Processo, competência ou <span class="accent">capacidade</span>?</h2>
+        <div class="grid-3 reveal">
+            <div class="card">
+                <div class="card-top"><div class="card-title">Competência</div><span class="badge baixa">Não é isso</span></div>
+                <div class="card-body">O D365 funciona sem precisar de intervenção constante do TI no que já foi implementado — a habilidade técnica não é o problema.</div>
+            </div>
+            <div class="card">
+                <div class="card-top"><div class="card-title">Processo</div><span class="badge critica">É isso</span></div>
+                <div class="card-body">Rotina de apagar incêndio, sem antecedência para planejar estrutura, melhoria ou os próximos passos do próprio setor.</div>
+            </div>
+            <div class="card">
+                <div class="card-top"><div class="card-title">Capacidade</div><span class="badge moderada">Em aberto</span></div>
+                <div class="card-body">Ainda não está claro se a resposta é mais gente. A prioridade é corrigir o nível/estrutura do cargo antes de somar headcount.</div>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">11 / 15</span>
+</section>
+
+<!-- === SLIDE 12 — O PEDIDO / LEVEL UP === -->
+<section class="slide content-slide" data-slide="fase8">
+    <div class="brand"><img src="assets/image1.png" alt="MSB"></div>
+    <div class="hud"><svg class="hud-spr pixel-icon" viewBox="0 0 16 20" width="18" height="22"><use href="#spr-hero"/></svg><span class="hud-tag">FASE 8</span></div>
+    <div class="container">
+        <span class="eyebrow reveal">O pedido</span>
+        <h2 class="reveal"><span class="accent">Level up</span>, não mais um jogador</h2>
+        <p class="lead reveal">Duas mudanças resolvem a raiz, antes de discutir contratação:</p>
+        <div class="grid-2 reveal">
+            <div class="pixel-frame">
+                <div class="card" style="height:100%">
+                    <div class="card-icon-row"><div class="card-icon-box"><svg class="pixel-icon" viewBox="0 0 8 8" width="22" height="22" shape-rendering="crispEdges"><use href="#i-trophy" fill="currentColor"/></svg></div><div class="card-title">1 · Realinhamento de cargo</div></div>
+                    <div class="card-body">Ajustar o cargo de <strong>assistente</strong> para o nível compatível com o escopo já exercido — sistemas, infraestrutura e projetos, sozinho.</div>
+                    <div class="gain">→ Reduz o risco de perder a única pessoa que sustenta o D365 e destrava a discussão de HC.</div>
+                </div>
+            </div>
+            <div class="pixel-frame">
+                <div class="card" style="height:100%">
+                    <div class="card-icon-row"><div class="card-icon-box"><svg class="pixel-icon" viewBox="0 0 8 8" width="22" height="22" shape-rendering="crispEdges"><use href="#i-chip" fill="currentColor"/></svg></div><div class="card-title">2 · Orçamento para IoT e melhorias</div></div>
+                    <div class="card-body">Redirecionar parte do orçamento do modo "apagar incêndio" para <strong>IoT e desenvolvimento de funcionalidades</strong> — sair do reativo.</div>
+                    <div class="gain">→ Base digital pronta pra nova plataforma industrial, sem projeto emergencial depois.</div>
+                </div>
+            </div>
+        </div>
+        <div class="card reveal" style="border-color:var(--accent-deep)">
+            <div class="card-body"><strong>A decisão de hoje:</strong> sim ou não pro realinhamento de cargo. Sim ou não pro orçamento de IoT. O resto é execução.</div>
+        </div>
+    </div>
+    <span class="slide-num">12 / 15</span>
+</section>
+
+<!-- === SLIDE 13 — ROADMAP 2027 === -->
+<section class="slide content-slide" data-slide="fase9">
+    <div class="brand"><img src="assets/image1.png" alt="MSB"></div>
+    <div class="hud"><svg class="hud-spr pixel-icon" viewBox="0 0 16 20" width="18" height="22"><use href="#spr-hero"/></svg><span class="hud-tag">FASE 9</span></div>
+    <div class="container">
+        <span class="eyebrow reveal">Roadmap 2027</span>
+        <h2 class="reveal">Quando cada coisa <span class="accent">avança</span></h2>
+        <div class="card reveal" style="border-color:var(--accent-deep)">
+            <div class="card-body"><strong>Realinhamento de cargo</strong> — decisão imediata, não entra no cronograma abaixo.</div>
+        </div>
+        <div class="flow reveal">
+            <div class="flow-row"><span class="step-num">Q1</span><span class="label">Definir metas 2027</span><span class="detail">Sair do reativo: prioridades definidas com antecedência, não decididas no chamado do dia.</span></div>
+            <div class="flow-row"><span class="step-num">Q2</span><span class="label">Canal único + autonomia no D365</span><span class="detail">Triagem de demandas e primeiros usuários-chave treinados — cada área resolve o básico sozinha.</span></div>
+            <div class="flow-row"><span class="step-num">Q3</span><span class="label">Piloto de IoT</span><span class="detail">Uma linha ou máquina conectada — base digital pra próxima onda de automação da fábrica.</span></div>
+            <div class="flow-row"><span class="step-num">Q4</span><span class="label">Revisão do ponto único</span><span class="detail">A dependência caiu? Ainda precisa de HC, ou o modelo já sustenta o próximo ciclo?</span></div>
+        </div>
+    </div>
+    <span class="slide-num">13 / 15</span>
+</section>
+
+<!-- === SLIDE 14 — COMO MEDIR (indicadores) === -->
+<section class="slide content-slide">
+    <div class="brand"><img src="assets/image1.png" alt="MSB"></div>
+    <div class="hud"><svg class="hud-spr pixel-icon" viewBox="0 0 16 20" width="18" height="22"><use href="#spr-hero"/></svg><span class="hud-tag">FASE 9.5</span></div>
+    <div class="container">
+        <span class="eyebrow reveal">Como medir</span>
+        <h2 class="reveal">O que o Diretor <span class="accent">cobra</span> depois de aprovar</h2>
+        <p class="lead reveal">Indicadores que não dependem de ferramenta nova — só de contar o que já muda no dia a dia.</p>
+        <div class="grid-3 reveal">
+            <div class="card">
+                <div class="card-icon-row"><div class="card-icon-box"><svg class="pixel-icon" viewBox="0 0 8 8" width="20" height="20" shape-rendering="crispEdges"><use href="#i-person" fill="currentColor"/></svg></div><div class="card-title">Áreas com autonomia</div></div>
+                <div class="card-body">Nº de áreas treinadas no D365 — meta: todas até o Q3.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon-row"><div class="card-icon-box"><svg class="pixel-icon" viewBox="0 0 8 8" width="20" height="20" shape-rendering="crispEdges"><use href="#i-box" fill="currentColor"/></svg></div><div class="card-title">Trabalho devolvido</div></div>
+                <div class="card-body">Nº de tarefas que voltaram para o dono do processo, fora do colo do TI.</div>
+            </div>
+            <div class="card">
+                <div class="card-icon-row"><div class="card-icon-box"><svg class="pixel-icon" viewBox="0 0 8 8" width="20" height="20" shape-rendering="crispEdges"><use href="#i-heart" fill="currentColor"/></svg></div><div class="card-title">Continuidade</div></div>
+                <div class="card-body">Backup sobe de 3/10 para meta 6/10 até o Q4.</div>
+            </div>
+        </div>
+    </div>
+    <span class="slide-num">14 / 15</span>
+</section>
+
+<!-- === SLIDE 15 — ENCERRAMENTO === -->
+<section class="slide title-slide">
+    <div class="container">
+        <img class="logo reveal" src="assets/image4.png" alt="MSB Medical System do Brasil">
+        <svg class="reveal pixel-icon" viewBox="0 0 16 20" width="64" height="80" shape-rendering="crispEdges" style="margin:0 auto 0.6rem; image-rendering:pixelated;"><use href="#spr-hero"/></svg>
+        <h1 class="reveal">CONTINUE?</h1>
+        <p class="subtitle reveal">Tirar o TI dos bastidores é decisão de quem já está do outro lado da tela.</p>
+        <div class="meta reveal">
+            <span>MSB Medical System do Brasil</span>
+            <span>TI · Missão 2027</span>
+        </div>
+    </div>
+    <svg class="wave-motif" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,64 C240,110 480,20 720,54 C960,88 1200,30 1440,70 L1440,120 L0,120 Z" fill="rgba(255,255,255,0.10)"/>
+        <path d="M0,84 C260,120 520,44 760,74 C1000,104 1240,54 1440,90 L1440,120 L0,120 Z" fill="rgba(156,229,238,0.18)"/>
+    </svg>
+    <span class="slide-num" style="color: rgba(255,255,255,0.7)">15 / 15</span>
+</section>
+
+</div>
+
+<div class="fp-dots" id="dots"></div>
+<div class="kb-hint"><kbd>←</kbd> <kbd>→</kbd> ou role para navegar</div>
+
+<script>
+(function () {
+    if (new URLSearchParams(location.search).has('static')) {
+        const st = document.createElement('style');
+        st.textContent = '*,*::before,*::after{transition:none!important;animation-duration:0.001s!important;animation-delay:0s!important}.reveal{opacity:1!important;transform:none!important}';
+        document.head.appendChild(st);
+    }
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const wrap = document.getElementById('fullpage');
+    const dotsBox = document.getElementById('dots');
+    const mobile = window.matchMedia('(max-width: 820px)');
+    let idx = 0, locked = false;
+
+    slides.forEach((s, i) => {
+        const b = document.createElement('button');
+        b.setAttribute('aria-label', 'Slide ' + (i + 1));
+        b.addEventListener('click', () => go(i));
+        dotsBox.appendChild(b);
+    });
+    const dots = Array.from(dotsBox.children);
+
+    document.querySelectorAll('.wm-node').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const target = document.querySelector('[data-slide="' + btn.dataset.goto + '"]');
+            if (!target) return;
+            const i = slides.indexOf(target);
+            if (i >= 0) go(i);
+        });
+    });
+
+    document.querySelectorAll('.dio-slider').forEach((sl) => {
+        const dio = sl.closest('.diorama');
+        const update = () => dio.style.setProperty('--reveal', sl.value + '%');
+        sl.addEventListener('input', update);
+        update();
+    });
+
+    function go(n) {
+        idx = Math.max(0, Math.min(slides.length - 1, n));
+        if (mobile.matches) {
+            slides[idx].scrollIntoView();
+            return;
+        }
+        wrap.style.transform = 'translateY(-' + idx * 100 + 'vh)';
+        slides.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        locked = true;
+        setTimeout(() => locked = false, 1000);
+    }
+
+    window.addEventListener('keydown', (e) => {
+        if (mobile.matches) return;
+        if (['ArrowDown', 'ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); go(idx + 1); }
+        if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key))          { e.preventDefault(); go(idx - 1); }
+        if (e.key === 'Home') { e.preventDefault(); go(0); }
+        if (e.key === 'End')  { e.preventDefault(); go(slides.length - 1); }
+    });
+
+    window.addEventListener('wheel', (e) => {
+        if (mobile.matches || locked || Math.abs(e.deltaY) < 12) return;
+        go(idx + (e.deltaY > 0 ? 1 : -1));
+    }, { passive: true });
+
+    let touchY = null;
+    window.addEventListener('touchstart', (e) => { if (!mobile.matches) touchY = e.touches[0].clientY; }, { passive: true });
+    window.addEventListener('touchend', (e) => {
+        if (mobile.matches || touchY === null) { touchY = null; return; }
+        const dy = touchY - e.changedTouches[0].clientY;
+        if (Math.abs(dy) > 50) go(idx + (dy > 0 ? 1 : -1));
+        touchY = null;
+    }, { passive: true });
+
+    mobile.addEventListener('change', (e) => {
+        if (e.matches) {
+            wrap.style.transform = 'none';
+        } else {
+            wrap.style.transition = 'none';
+            go(idx);
+            requestAnimationFrame(() => requestAnimationFrame(() => wrap.style.transition = ''));
+        }
+    });
+
+    const h = parseInt(location.hash.slice(1), 10);
+    if (!isNaN(h) && h > 1) {
+        if (mobile.matches) {
+            history.scrollRestoration = 'manual';
+            slides[h - 1].scrollIntoView();
+            window.addEventListener('load', () => setTimeout(() => slides[h - 1].scrollIntoView(), 80));
+        } else {
+            wrap.style.transition = 'none';
+            go(h - 1);
+            requestAnimationFrame(() => requestAnimationFrame(() => wrap.style.transition = ''));
+        }
+    } else if (!mobile.matches) {
+        go(0);
+    }
+})();
+</script>
+
+</body>
+</html>
